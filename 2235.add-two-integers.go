@@ -6,9 +6,7 @@
 
 // @lc code=start
 func sum(num1 int, num2 int) int {
-	n1 := num1
-	n2 := num2
-	return n1 + n2
+	return num1 + num2
 }
 
 // @lc code=end
