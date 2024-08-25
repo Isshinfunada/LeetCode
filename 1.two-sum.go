@@ -10,11 +10,11 @@ package main
 func twoSum(nums []int, target int) []int {
 	hm := make(map[int]int)
 	for i, num := range nums {
-		_, ok := hm[num]
-		if ok {
-			return []int{i, hm[num]}
+		_, ok := hm[target-num]
+		if i != 0 && ok {
+			return []int{i, hm[target-num]}
 		}
-		hm[target-num] = i
+		hm[num] = i
 	}
 	return nil
 }
