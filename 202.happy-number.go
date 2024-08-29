@@ -8,41 +8,23 @@
 package main
 
 func isHappy(n int) bool {
-	var values []int
-	result := n
-	for result != 1 {
-		values = convert(result)
-		result = happyLoop(values)
-	}
-	return true
-}
+	record := map[int]bool{n: true}
 
-// int型のスライスを渡すと、2乗した計算結果を返す
-func happyLoop(value []int) int {
-	r := make(map[int]int)
-	for i, v := range value {
-		r[i] = v * v
-	}
-
-	sum := 0
-	for _, n := range r {
-		sum += n
-	}
-	return sum
-}
-
-// 1桁ずつ分解
-func convert(intnum int) []int {
-	i := intnum
-	var res []int
-	for i != 1 {
-		for i > 9 {
-			res = append(res, i/10)
+	for n != 1 {
+		var sum int
+		for n != 0 {
+			num := n % 10
+			sum += num * num
+			n /= 10
 		}
-		res = append(res, i%10)
+		n = sum
+		if record[n] {
+			return false
+		}
+		record[n] = true
 	}
 
-	return res
+	return true
 }
 
 // @lc code=end
