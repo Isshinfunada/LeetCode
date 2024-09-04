@@ -7,47 +7,20 @@
 // @lc code=start
 package main
 
-import "fmt"
+import "strings"
 
 func numUniqueEmails(emails []string) int {
-	list := normalize(emails)
-	fmt.Printf("result: %#v\n", list)
-	return len(list)
-}
+	d := make(map[string]bool)
 
-func normalize(emails []string) []string {
-	var localname []string
-	var domainname []string
-	var result []string
-	var after bool
-	// まず@前後でわける
-	for _, v := range emails {
-		for _, r := range v {
-			if r == '@' {
-				after = true
-				continue
-			}
-			if !after {
-				if r == '.' {
-					continue
-				}
-				if r == '+' {
-					break
-				}
-				localname = append(localname, string(r))
-				continue
-			}
-			domainname = append(domainname, string(r))
-		}
+	for _, email := range emails {
+		parts := strings.Split(email, "@")
+		local := strings.Split(parts[0], "+")
+		check := strings.Replace(local[0], ".", "", -1) + "@" + parts[1]
 
-		after = false
+		d[check] = true
 	}
-	fmt.Printf("localname: %#v\n", localname)
-	fmt.Printf("domainname: %#v\n", domainname)
 
-	result = append(result, localname...)
-	result = append(result, domainname...)
-	return result
+	return len(d)
 }
 
 // @lc code=end
