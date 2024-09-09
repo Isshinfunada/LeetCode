@@ -14,21 +14,19 @@
  */
 package main
 
-import "fmt"
-
 func deleteDuplicates(head *ListNode) *ListNode {
-	hm := make(map[int]bool)
-	var result *ListNode
+	if head == nil {
+		return nil
+	}
+	result := &ListNode{Val: head.Val}
+	current := result
+
 	for head.Next != nil {
-		if _, ok := hm[head.Val]; !ok {
-			result = &ListNode{Val: head.Val, Next: head.Next}
-			result = result.Next
-			fmt.Printf("result: %#v\n", result)
-		}
-		hm[head.Val] = true
-		fmt.Printf("hm: %#v\n", hm)
 		head = head.Next
-		fmt.Printf("head: %#v\n", head)
+		if head.Val != current.Val {
+			current.Next = &ListNode{Val: head.Val}
+			current = current.Next
+		}
 	}
 	return result
 }
