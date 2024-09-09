@@ -7,25 +7,19 @@
 // @lc code=start
 package main
 
-import "fmt"
-
 func moveZeroes(nums []int) {
-	cnt := 0
-	for i, v := range nums {
-		if v == 0 {
-			fmt.Printf("cnt: %#v\n", cnt)
-			cnt += 1
-			nums[i] = nums[len(nums)-1]
-			nums = nums[:len(nums)-1]
-			fmt.Printf("nums: %#v\n", nums)
-			continue
-		}
-		fmt.Printf("nums: %#v\n", nums)
-	}
+	l := 0
 
-	for i := 0; i < cnt; i++ {
-		nums = append(nums, 0)
+	for r := range nums {
+		if nums[r] != 0 {
+			nums[l] = nums[r]
+			l++
+		}
 	}
+	for ; l < len(nums); l++ {
+		nums[l] = 0
+	}
+	return
 }
 
 // @lc code=end
