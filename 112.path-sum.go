@@ -16,12 +16,18 @@
 package main
 
 func hasPathSum(root *TreeNode, targetSum int) bool {
-	var current *TreeNode
-	var diff int
+	// Base case
+	if nil == root {
+		return false
+	}
 
-	for root.Left == nil && root.Right == nil {
-		current = &TreeNode{Val: root.Val, Left: root.Left, Right: root.Right}
-		diff = targetSum - current.Val
+	if nil == root.Left && nil == root.Right {
+		// Base case
+		return root.Val == targetSum
+
+	} else {
+		// General cases
+		return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
 	}
 }
 
