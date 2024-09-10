@@ -7,20 +7,17 @@
 // @lc code=start
 package main
 
-import "slices"
-
 func maxProfit(prices []int) int {
-	dif := []int{0}
-	var now int
-	for i := len(prices) - 1; i >= 0; i-- {
-		now = i
-		for j := now; j >= 0; j-- {
-			if prices[i]-prices[j] > 0 {
-				dif = append(dif, prices[i]-prices[j])
-			}
+	dif := 0
+	now := prices[0]
+	for i := 1; i < len(prices); i++ {
+		if now > prices[i] {
+			now = prices[i]
+		} else if prices[i]-now > dif {
+			dif = prices[i] - now
 		}
 	}
-	return slices.Max(dif)
+	return dif
 }
 
 // @lc code=end
