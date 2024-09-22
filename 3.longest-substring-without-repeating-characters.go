@@ -7,41 +7,41 @@
 // @lc code=start
 package main
 
-import (
-	"strconv"
-)
-
-type Lists struct {
-	frequency int
-	length    int
-}
+import "fmt"
 
 func lengthOfLongestSubstring(s string) int {
-	var str []rune
-	var moji string
-	master := make(map[string]*Lists)
-
-	for i, r := range s {
-		moji = strconv.QuoteRune(r)
-		master[moji] = &Lists{}
-		if i != 0 {
-			if str[i-1] != r {
-				str = append(str, r)
-				continue
-			}
-			moji = string(str)
-		}
-		if master[moji] == nil {
-			master[moji].frequency += 1
-			master[moji].length = len(str)
-		}
-		master[moji].frequency += 1
+	if len(s) == 0 {
+		return 0
 	}
 
-	// for master[moji].frequency
-	// 	for master[moji].length
+	max := 1
+	start := 1
 
-	return master["abc"].length
+	for i := 0; i < len(s); i++ {
+		fmt.Printf("i: %#v\n", i)
+		hm := make(map[rune]bool)
+		cnt := 1
+		for ; start < len(s); start++ {
+			_, ok := hm[rune(s[start])]
+			fmt.Printf("start: %#v\n", start)
+			if (s[i] != s[start]) && !ok {
+				cnt++
+				if cnt > max {
+					max = cnt
+				}
+				hm[rune(s[start])] = true
+
+				fmt.Printf("max: %#v\n", max)
+			} else {
+				if cnt > max {
+					max = cnt
+				}
+				start = i + 1
+				break
+			}
+		}
+	}
+	return max
 }
 
 // @lc code=end
