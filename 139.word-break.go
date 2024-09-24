@@ -7,31 +7,22 @@
 // @lc code=start
 package main
 
-import (
-	"fmt"
-)
+import "strings"
 
 func wordBreak(s string, wordDict []string) bool {
-	hm := make(map[rune]bool)
-	for _, str := range wordDict {
-		fmt.Printf("str: %#v\n", str)
-		for _, r := range str {
-			fmt.Printf("r: %#v\n", string(r))
-			hm[r] = true
+	q := []string{s}
+	for len(q) != 0 {
+		remain := q[0]
+		for _, w := range wordDict {
+			if remain == w {
+				return true
+			}
+			if strings.HasPrefix(remain, w) {
+				q = append(q, remain[len(w):])
+			}
 		}
 	}
-
-	var check bool
-	for _, c := range s {
-		fmt.Printf("c: %#v\n", string(c))
-		if _, ok := hm[c]; ok {
-			continue
-		} else {
-			check = true
-		}
-	}
-	fmt.Printf("hm: %#v\n", hm)
-	return !check
+	return false
 }
 
 // @lc code=end
