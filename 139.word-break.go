@@ -11,14 +11,20 @@ import "strings"
 
 func wordBreak(s string, wordDict []string) bool {
 	q := []string{s}
+	memo := make(map[string]bool)
 	for len(q) != 0 {
-		remain := q[0]
-		for _, w := range wordDict {
-			if remain == w {
+		remaining := q[0]
+		q = q[1:] // Dequeue
+		if _, ok := memo[remaining]; ok {
+			continue
+		}
+		for _, word := range wordDict {
+			if word == remaining {
 				return true
 			}
-			if strings.HasPrefix(remain, w) {
-				q = append(q, remain[len(w):])
+			if strings.HasPrefix(remaining, word) {
+				q = append(q, remaining[len(word):]) // Enqueue
+				memo[remaining] = true
 			}
 		}
 	}
