@@ -15,14 +15,14 @@
 package main
 
 func detectCycle(head *ListNode) *ListNode {
-	alreadyRunnedArray := make(map[int]*ListNode)
+	alreadyRunnedArray := make(map[*ListNode]bool)
 	currentHead := head
 
 	for currentHead != nil {
-		if _, ok := alreadyRunnedArray[currentHead.Val]; ok {
-			return alreadyRunnedArray[currentHead.Val]
+		if _, ok := alreadyRunnedArray[currentHead]; ok {
+			return currentHead
 		}
-		alreadyRunnedArray[currentHead.Val] = currentHead
+		alreadyRunnedArray[currentHead] = true
 		currentHead = currentHead.Next
 	}
 	return nil
